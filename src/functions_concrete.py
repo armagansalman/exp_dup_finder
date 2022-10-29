@@ -39,18 +39,18 @@ import types_specific as S
 
 
 def local_file_size(path: B.t_Str) \
-                -> B.t_Size:
+        -> B.t_Size:
     """docstr"""
-#(
+# (
     return os.path.getsize(path)
-#)
+# )
 
 
 def read_local_file_bytes(file_path: B.t_Str, start_offset: B.t_Int,
                           end_offset: B.t_Int) \
-                    -> B.t_Bytes:
+        -> B.t_Bytes:
     """Returns either the requested byte sequence or throws an Exception.
-    
+
     * Index values are inclusive.
     """
 # (
@@ -65,14 +65,14 @@ def read_local_file_bytes(file_path: B.t_Str, start_offset: B.t_Int,
             # (
             raise Exception("Negative start_offset was given for file.")
         # )
-        
+
         return in_fobj.read(end_offset - start_offset + 1)
     # )
 # )
 
 
 def get_local_dir_files(dirpath: B.t_Str) \
-                    -> B.t_List[B.t_Str]:
+        -> B.t_List[B.t_Str]:
     """Might throw an Exception."""
 # (
     rec_files: B.t_List = []

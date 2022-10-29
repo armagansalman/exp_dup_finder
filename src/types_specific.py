@@ -36,8 +36,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     After t_ , first letter have to be uppercase.
 """
 
+
 import types_builtin as B
-
-
+#
 t_Opak = B.t_Any
 t_IterOpak = B.t_Iter[t_Opak]
