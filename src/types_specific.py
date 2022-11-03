@@ -29,15 +29,19 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
-
-
+#
+#
 """ 
     All types have to start with t_
     After t_ , first letter have to be uppercase.
+    After t_, first letter of every word have to be uppercase.
 """
-
-
+#
+#
 import types_builtin as B
 #
 t_Opak = B.t_Any
 t_IterOpak = B.t_Iter[t_Opak]
+t_ItrOpak = B.t_Iter[t_Opak]
+
+

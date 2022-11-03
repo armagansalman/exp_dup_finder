@@ -29,14 +29,15 @@ CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
-
-
+#
+#
 """ 
     All types have to start with t_
     After t_ , first letter have to be uppercase.
+    After t_, first letter of every word have to be uppercase.
 """
-
-
+#
+#
 from typing import Iterable as t_Iter
 from typing import List as t_List
 from typing import Set as t_Set
@@ -57,3 +58,5 @@ t_Str = str
 t_Bytes = bytes
 
 t_IterHashable = t_Iter[t_Hashable]
+
+t_Fn = t_Callable
