@@ -38,10 +38,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 #
 #
-import types_builtin as B
 #
-t_Opak = B.t_Any
-t_IterOpak = B.t_Iter[t_Opak]
-t_ItrOpak = B.t_Iter[t_Opak]
-
+import types_builtin as B
 

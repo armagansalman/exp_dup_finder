@@ -37,19 +37,23 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     After t_, first letter of every word have to be uppercase.
 """
 #
-#
-from typing import Iterable as t_Iter
-from typing import List as t_List
+from collections.abc import Sized as t_Sized
+
+from typing import Iterable as t_Itr
+from typing import List as t_Lst
 from typing import Set as t_Set
-from typing import Tuple as t_Tuple
-from typing import Dict as t_Dict
-from typing import Callable as t_Callable
+from typing import Tuple as t_Tpl
+from typing import Dict as t_Dct
+from typing import Callable as t_Fn
 from typing import Any as t_Any
 from typing import Hashable as t_Hashable
-from typing import Optional as t_Optional
+from typing import Optional as t_Opt
 from typing import ItemsView as t_ItemsView
 from typing import Union as t_Union
 
+from typing import TypeVar
+from typing import Generic as t_Generic
+#
 t_Int = int
 t_NumNatural = t_Int  # Starts from 0.
 t_Size = t_NumNatural
@@ -57,6 +61,7 @@ t_Size = t_NumNatural
 t_Str = str
 t_Bytes = bytes
 
-t_IterHashable = t_Iter[t_Hashable]
+t_ItrHashable = t_Itr[t_Hashable]
 
-t_Fn = t_Callable
+T = TypeVar('T')
+U = TypeVar('U')
