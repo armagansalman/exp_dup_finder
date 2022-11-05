@@ -58,10 +58,11 @@ t_Int = int
 t_NumNatural = t_Int  # Starts from 0.
 t_Size = t_NumNatural
 
+t_Bool = bool
 t_Str = str
 t_Bytes = bytes
 
 t_ItrHashable = t_Itr[t_Hashable]
 
-T = TypeVar('T')
-U = TypeVar('U')
+T = TypeVar('T') # A Generic type.
+U = TypeVar('U') # A Generic type.

@@ -37,28 +37,28 @@ import types_builtin as B
 import types_specific as S
 #
 # B.T == A Generic type.
+# B.U == A Generic type.
 #
-def item_get(ref: B.T
-        , fn_locator: B.t_Fn[[B.T], B.U]) \
+def ref_get_data(ref: B.T
+        , fn_getter: B.t_Fn[[B.T], B.U]) \
         -> B.U:
-    """ Returns opaque location for one given item.
+    """ ( Returns opaque location for one given item. )
 
     ( * Might throw exception )
     """
 # (
-    return fn_locator(ref)
+    return fn_getter(ref)
 # )
 
 
-def item_set_data(ref: B.T \
-        , fn_set:B.t_Fn[[B.T], B.T] \
+def ref_set_data(ref: B.T \
+        , fn_set:B.t_Fn[[B.T], B.t_Bool] \
         , *args \
         , **kwargs) \
-        -> B.T:
-    """ Sets some data for one given item.
-    ( Returns a result which is of type B.T )
-    ( Result value can be used for various actions )
-
+        -> B.t_Bool:
+    """ ( Sets some data for one given item. )
+    ( Returns True if successfully set. Returns False otherwise.)
+    
     ( * Might throw exception )
     """
 # (
@@ -68,10 +68,10 @@ def item_set_data(ref: B.T \
 # )
 
 
-def item_len(ref: B.T
+def ref_len(ref: B.T
         , fn_len: B.t_Fn[[B.T], B.t_Int]) \
         -> B.t_Int:
-    """ Returns opaque len for one given item.
+    """ ( Returns opaque len for one given item. )
 
     ( * Might throw exception )
     """
@@ -80,10 +80,10 @@ def item_len(ref: B.T
 # )
 
 
-def item_bytes(ref: B.T \
+def ref_bytes(ref: B.T \
         , fn_bytes: B.t_Fn[[B.T], B.t_Bytes]) \
         -> B.t_Bytes:
-    """ Returns all OR some of the bytes for one given item.
+    """ ( Returns a slice (can be all) of the bytes for one given item. )
 
     ( * Might throw exception )
     """
@@ -103,8 +103,8 @@ def main(*args, **kwargs):
         return lst[0]
     #)
     
-    itm: B.t_Lst[B.t_Int] = item_get(lst, get_list)
-    itm_2: B.t_Lst[B.t_Bytes] = item_get(lst, get_list)
+    itm: B.t_Lst[B.t_Int] = ref_get_data(lst, get_list)
+    itm_2: B.t_Lst[B.t_Bytes] = ref_get_data(lst, get_list)
     
     def get_len(lst: B.t_Lst[B.T]) \
             -> B.t_Int:
@@ -112,17 +112,17 @@ def main(*args, **kwargs):
         return len(lst)
     #)
     
-    len_itm = item_len(itm, get_len)
+    len_itm = ref_len(itm, get_len)
     
     assert(len_itm == 3)
     
     assert(itm == lst[0])
     
-    assert(bytes(lst[0]) == item_bytes(itm, lambda x: bytes(x)))
+    assert(bytes(lst[0]) == ref_bytes(itm, lambda x: bytes(x)))
     
     data = 5
     set_func = lambda x,val: x.append(val)
-    item_set_data(lst, set_func, data)
+    ref_set_data(lst, set_func, data)
     
     assert(lst[-1] == data)
     
