@@ -92,6 +92,21 @@ def ref_bytes(ref: B.T \
 # )
 
 
+def ref_grouper(refs: B.t_Iter[B.T] \
+        , fn_key_getter: B.t_Fn[[B.T], B.U]) \
+        -> B.t_Iter[B.t_Tuple[B.U, B.t_Iter[B.T]]]:
+    """ ( Returns tuples where first element is a key and second element is an
+    iterable where each element returns that key from fn_key_getter)
+    ( key values of references must be sortable. )
+    
+    ( * Might throw exception )
+    """
+# (
+    # TODO(armagans): Create (ref, key) iter. sort by key. Create groups from
+    # sorted iterable.
+    pass
+# )
+
 
 def main(*args, **kwargs):
 #(
