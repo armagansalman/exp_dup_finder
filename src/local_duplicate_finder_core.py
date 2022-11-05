@@ -38,10 +38,14 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 from pathlib import Path
 #
 import types_builtin as B
+import types_created as C
 #
-def discard_subdirs(refs: B.t_Itr[B.T] \
-        , fn_path_getter: B.t_Fn[[B.T], B.t_Str]) \
-        -> B.t_Itr[B.T]:
+import local_path_functions as LPF
+#
+#
+def discard_subdirs(refs: B.t_Iter[B.T] \
+        , fn_pathstr_getter: B.t_Fn[[B.T], B.t_Str]) \
+        -> B.t_List[B.T]:
     """ ( Given directories DS, returns a new iterable of directories DR
     where no element of DR is a subdirectory of any element of DS. )
     ( Assumes given paths from refs are valid directories. )
@@ -49,7 +53,7 @@ def discard_subdirs(refs: B.t_Itr[B.T] \
     ( * Might throw exception. )
     """
 #(
-    ref_list: B.t_Lst[B.T] = list(refs)
+    ref_list: B.t_List[B.T] = list(refs)
     
     if len(ref_list) < 2:
         # No subdirs can exist in ref_list. Returns as it is.
@@ -57,10 +61,19 @@ def discard_subdirs(refs: B.t_Itr[B.T] \
         return ref_list
     #)
     
-    ref_path_itr = map(lambda ref: ( ref, Path(fn_path_getter(ref)) ) , ref_list)
+    """ absolute() function turns 'computer:///' to gibberish.
+    
+    ref_path_itr = map(lambda ref: ( ref, Path(fn_pathstr_getter(ref)) ) , ref_list)
     
     # Use absolute paths for later subdir check:
     ref_path_tpls = list(map(lambda tpl: (tpl[0], str(tpl[1].absolute())) , ref_path_itr))
+    
+    """
+    
+    ref_path_itr = map(lambda ref: ( ref, fn_pathstr_getter(ref) ) , ref_list)
+    
+    # Use absolute paths for later subdir check:
+    ref_path_tpls = list(ref_path_itr)
     
     ref_path_tpls.sort(key = lambda x: x[1]) # Key is directory path str.
     
@@ -90,11 +103,27 @@ def discard_subdirs(refs: B.t_Itr[B.T] \
             # Include curr_ref. İt is not a subdir.
         #(
             nonsub_dirs.append(curr_ref)
+            prev = curr
         #)
-        prev = curr
+        
     #)
     
     return nonsub_dirs
+#)
+
+
+def find_dir_files_recursive(dir_refs: B.t_Iter[B.T] \
+        , fn_pathstr_getter: B.t_Fn[[B.T], B.t_Str]) \
+        -> B.t_Iter[B.t_Tuple[B.T, B.t_Iter[B.t_Str]]]:
+    """ Given opaque refs which somehow has directory path data strings,
+    returns all files (as absolute posix paths) under those directories.
+    """
+#(
+    nonsub_dirs: B.t_Iter[B.T] = discard_subdirs(dir_refs, fn_pathstr_getter)
+    
+    fn_pg = fn_pathstr_getter
+    
+    return map(lambda x: (x, LPF.get_fpaths_recursively(fn_pg(x))) , nonsub_dirs)
 #)
 
 
@@ -108,14 +137,35 @@ def main(*args, **kwargs):
         , "/home/genel/Downloads/Git_aosa_files/" \
         , "/home/genel/Downloads/" \
         , "/home/genel/Downloadsasd/" \
+        , "computer:///" \
         ]
     #
     nonsub_dirs = discard_subdirs(DIRS, lambda x: x)
     
+    print("Nonsub directories:")
     for x in nonsub_dirs:
     #(
         print(x)
     #)
+    print("~~~~~~~~~")
+    
+    dir_filelist_tpls = find_dir_files_recursive(nonsub_dirs, lambda x: x)
+    
+    print("(Dir, filelist) tuples:")
+    for x, lst in dir_filelist_tpls:
+    #(
+        print(f"New dir: {x}")
+        for y in lst:
+            print(y)
+    #)
+    print("~~~~~~~~~")
+    
+    x: C.t_OptError = C.Error("data", "msg")
+    print(x)
+    print(type(x) == C.Error)
+    print(C.is_given_type(x, C.Error))
+    y: C.t_OptError = "a"
+    y = 5
     
 #)
 

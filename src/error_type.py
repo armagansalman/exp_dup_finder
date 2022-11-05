@@ -1,4 +1,5 @@
 """
+
 BSD 3-Clause License
 
 Copyright (c) 2022, Armağan Salman
@@ -28,38 +29,52 @@ SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER
 CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY,
 OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
 """
-
-
-""" 
-    All types have to start with t_
-    After t_ , first letter have to be uppercase.
-"""
-
-
-from typing import Iterable as t_Iter
-from typing import List as t_List
-from typing import Set as t_Set
-from typing import Tuple as t_Tuple
-from typing import Dict as t_Dict
-from typing import Callable as t_Fn
-from typing import Any as t_Any
-from typing import Hashable as t_Hashable
-from typing import Optional as t_Opt
-from typing import ItemsView as t_ItemsView
-from typing import Union as t_Union
-from typing import TypeVar
-
-t_Bool = bool
-t_Int = int
-t_NumNatural = t_Int  # Starts from 0.
-t_Size = t_NumNatural
-
-t_Str = str
-t_Bytes = bytes
-
-t_IterHashable = t_Iter[t_Hashable]
 #
 #
-T = TypeVar('T')
-U = TypeVar('U')
+import types_builtin as B
+#(
+#)
+class Error:
+    """ """
+#(
+    _data: B.t_Any
+    _err_msg: B.t_Str
+    
+    def __init__(self, data, err_msg):
+        #
+    #(
+        self._data = data
+        self._err_msg = err_msg
+    #)
+    
+    def get_err_data(self):
+        #
+    #(
+        return self._data
+    #)
+    
+    def get_err_msg(self):
+        #
+    #(
+        return self._err_msg
+    #)
+    
+    def __str__(self):
+    #(
+        return f"[~ ERROR OBJECT ~] Data: {str(self._data)} | Error message: {str(self._err_msg)}"
+    #)
+#)
+
+
+def main(*args, **kwargs):
+#(
+    raise Exception("Not runnable.")
+#)
+
+
+if __name__ == "__main__":
+#(
+    main()
+#)

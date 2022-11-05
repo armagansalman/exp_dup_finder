@@ -35,31 +35,15 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     All types have to start with t_
     After t_ , first letter have to be uppercase.
 """
-
-
-from typing import Iterable as t_Iter
-from typing import List as t_List
-from typing import Set as t_Set
-from typing import Tuple as t_Tuple
-from typing import Dict as t_Dict
-from typing import Callable as t_Fn
-from typing import Any as t_Any
-from typing import Hashable as t_Hashable
-from typing import Optional as t_Opt
-from typing import ItemsView as t_ItemsView
-from typing import Union as t_Union
-from typing import TypeVar
-
-t_Bool = bool
-t_Int = int
-t_NumNatural = t_Int  # Starts from 0.
-t_Size = t_NumNatural
-
-t_Str = str
-t_Bytes = bytes
-
-t_IterHashable = t_Iter[t_Hashable]
 #
 #
-T = TypeVar('T')
-U = TypeVar('U')
+import types_builtin as B
+#
+from error_type import Error
+
+t_OptError = B.t_Union[B.t_Any, Error]
+
+def is_given_type(obj: B.t_Any, TYPE: type):
+#(
+    return type(obj) == TYPE
+#)
