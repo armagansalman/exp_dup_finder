@@ -127,6 +127,32 @@ def find_dir_files_recursive(dir_refs: B.t_Iter[B.T] \
 #)
 
 
+t_IterPaths = B.t_Iter[B.t_Str]
+def combine_pathlists_from_tuples(dirref_pathlist_tpls \
+        : B.t_Iter[B.t_Tuple[B.T, t_IterPaths]]) \
+        -> t_IterPaths:
+    #
+#(
+    all_paths: B.t_List[B.t_Str] = []
+    
+    for dirref, pathiter in dirref_pathlist_tpls:
+    #(
+        """
+        paths = pathiter
+        
+        if not C.is_given_type(pathiter, B.t_List):
+        #(
+            paths = list(pathiter)
+        #)
+        """
+        
+        all_paths.extend(pathiter)
+    #)
+    
+    return all_paths
+#)
+
+
 def main(*args, **kwargs):
 #(
     DIRS = [ \
@@ -140,6 +166,12 @@ def main(*args, **kwargs):
         , "computer:///" \
         ]
     #
+
+    _DIRS = [ \
+        "/home/genel" \
+        ]
+    #
+    
     nonsub_dirs = discard_subdirs(DIRS, lambda x: x)
     
     print("Nonsub directories:")
@@ -149,8 +181,9 @@ def main(*args, **kwargs):
     #)
     print("~~~~~~~~~")
     
-    dir_filelist_tpls = find_dir_files_recursive(nonsub_dirs, lambda x: x)
+    dir_filelist_tpls = tuple(find_dir_files_recursive(nonsub_dirs, lambda x: x))
     
+    """
     print("(Dir, filelist) tuples:")
     for x, lst in dir_filelist_tpls:
     #(
@@ -159,6 +192,17 @@ def main(*args, **kwargs):
             print(y)
     #)
     print("~~~~~~~~~")
+    """
+    
+    comb_paths = combine_pathlists_from_tuples(dir_filelist_tpls)
+    
+    print("Combined paths:")
+    for x in comb_paths:
+    #(
+        print(x)
+    #)
+    print("~~~~~~~~~")
+    
     
     x: C.t_OptError = C.Error("data", "msg")
     print(x)
