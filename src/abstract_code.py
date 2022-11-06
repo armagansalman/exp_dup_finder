@@ -34,7 +34,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 # TODO(armagans): Differences between t_Any && Generic[T]
 #
 import types_builtin as B
-import types_specific as S
+import types_created as C
 #
 # B.T == A Generic type.
 # B.U == A Generic type.
@@ -92,9 +92,9 @@ def ref_bytes(ref: B.T \
 # )
 
 
-def ref_grouper(refs: B.t_Iter[B.T] \
+def ref_group_by_key(refs: B.t_Iter[B.T] \
         , fn_key_getter: B.t_Fn[[B.T], B.U]) \
-        -> B.t_Iter[B.t_Tuple[B.U, B.t_Iter[B.T]]]:
+        -> B.t_Iter[B.t_Tuple[B.U, B.t_Iter[B.t_Union[B.T, C.Error]]]]:
     """ ( Returns tuples where first element is a key and second element is an
     iterable where each element returns that key from fn_key_getter)
     ( key values of references must be sortable. )
@@ -102,26 +102,35 @@ def ref_grouper(refs: B.t_Iter[B.T] \
     ( * Might throw exception )
     """
 # (
-    # TODO(armagans): Create (ref, key) iter. sort by key. Create groups from
+    # TODO(armagans): Create (key, ref) iter. | sort by key. | Create groups from
     # sorted iterable.
-    pass
+    key_refs: B.t_List[B.t_Tuple[B.U, B.t_Union[B.T, C.Error]]] = []
+    
+    for rf in refs:
+    #(
+        # TODO(armagans): Use try and make an C.Error object on exception.
+        ky = fn_key_getter(rf)
+        key_refs.append( (ky, rf) )
+    #)
+    
+    return None
 # )
 
 
 def main(*args, **kwargs):
 #(
-    lst: B.t_Lst[B.t_Lst[B.t_Int]] = [[1,2,3], [4,5]]
+    lst: B.t_List[B.t_List[B.t_Int]] = [[1,2,3], [4,5]]
     
-    def get_list(lst: B.t_Lst[B.t_Lst[B.T]]) \
-            -> B.t_Lst[B.T]:
+    def get_list(lst: B.t_List[B.t_List[B.T]]) \
+            -> B.t_List[B.T]:
     #(
         return lst[0]
     #)
     
-    itm: B.t_Lst[B.t_Int] = ref_get_data(lst, get_list)
-    itm_2: B.t_Lst[B.t_Bytes] = ref_get_data(lst, get_list)
+    itm: B.t_List[B.t_Int] = ref_get_data(lst, get_list)
+    itm_2: B.t_List[B.t_Bytes] = ref_get_data(lst, get_list)
     
-    def get_len(lst: B.t_Lst[B.T]) \
+    def get_len(lst: B.t_List[B.T]) \
             -> B.t_Int:
     #(
         return len(lst)
@@ -175,7 +184,8 @@ def mypy_test_2():
     
     def fn(a: B.T, b: B.T) -> B.T:
     #(
-        return [1,2,3]
+        return a
+        #return [1,2,3] # Should return error with mypy.
     #)
     
     z = fn(x,y)

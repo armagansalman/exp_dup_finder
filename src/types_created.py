@@ -41,7 +41,7 @@ import types_builtin as B
 #
 from error_type import Error
 
-t_OptError = B.t_Union[B.t_Any, Error]
+#t_OptError = B.t_Union[B.t_Any, Error]
 
 def is_given_type(obj: B.t_Any, TYPE: type):
 #(
