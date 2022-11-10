@@ -32,6 +32,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 """
 # TODO(armagans): Differences between t_Any && Generic[T]
+import itertools as IT
 #
 import types_builtin as B
 import types_created as C
@@ -39,7 +40,7 @@ import types_created as C
 # B.T == A Generic type.
 # B.U == A Generic type.
 #
-def ref_get_data(ref: B.T
+def ref_get_data(ref: B.T \
         , fn_getter: B.t_Fn[[B.T], B.U]) \
         -> B.U:
     """ ( Returns opaque location for one given item. )
@@ -94,26 +95,33 @@ def ref_bytes(ref: B.T \
 
 def ref_group_by_key(refs: B.t_Iter[B.T] \
         , fn_key_getter: B.t_Fn[[B.T], B.U]) \
-        -> B.t_Iter[B.t_Tuple[B.U, B.t_Iter[B.t_Union[B.T, C.Error]]]]:
-    """ ( Returns tuples where first element is a key and second element is an
-    iterable where each element returns that key from fn_key_getter)
+        -> B.t_Tuple[B.t_Iter, B.t_Iter[C.Error]]:
+    """ ( Returns 2-tuple X: X[0] is 2-tuple list Y where first element
+    of each tuple of Y is a key and second element is an iterable where each element
+    returns that key from fn_key_getter)
     ( key values of references must be sortable. )
-    
-    ( * Might throw exception )
     """
 # (
-    # TODO(armagans): Create (key, ref) iter. | sort by key. | Create groups from
+    # TODO(armagans): Create (key, ref) iter. | sort by key. (Use itertools.groupby) | Create groups from
     # sorted iterable.
-    key_refs: B.t_List[B.t_Tuple[B.U, B.t_Union[B.T, C.Error]]] = []
+    key_refs: B.t_List[B.t_Tuple[B.U, B.T]] = []
+    errors: B.t_List[C.Error] = []
     
     for rf in refs:
     #(
-        # TODO(armagans): Use try and make an C.Error object on exception.
-        ky = fn_key_getter(rf)
-        key_refs.append( (ky, rf) )
+        try:
+        #(
+            key_res = fn_key_getter(rf)
+            key_refs.append( (key_res, rf) )
+        #)
+        except Exception as Err:
+        #(
+            errors.append(C.Error(rf, Err))
+        #)
     #)
+    groups = IT.groupby(key_refs, key = lambda x: x[0])
     
-    return None
+    return (groups, errors)
 # )
 
 
@@ -152,6 +160,24 @@ def main(*args, **kwargs):
     
     print(f"~[ INFO ]~ Passed some tests. Module name: `{__name__}`.")
     
+    to_group = [[1,2],[1,2],[1,3],[1,4],[3,4],[5,6],[7,8],["abc"],999]
+    #to_group.sort(key = lambda x: x[0], reverse = True)
+    
+    print(to_group)
+    groups, errors = ref_group_by_key(to_group, fn_key_getter = lambda x: x[0])
+    
+    for k, grp in groups:
+    #(
+        print(k)
+        print(list(grp))
+        print("~~~~~~~~~~~~~")
+    #)
+    
+    print(f"{errors = }")
+    for x in errors:
+    #(
+        print(x)
+    #)
 #)
 
 
