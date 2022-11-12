@@ -39,8 +39,8 @@ import types_builtin as B
 class Error:
     """ """
 #(
-    _data: B.t_Any
-    _err_msg: B.t_Str
+    _data: B.Any
+    _err_msg: B.Str
     
     def __init__(self, data, err_msg):
         #

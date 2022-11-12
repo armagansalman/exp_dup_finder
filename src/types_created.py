@@ -32,8 +32,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 
 """ 
-    All types have to start with t_
-    After t_ , first letter have to be uppercase.
+    All types have to start with 
+    After  , first letter have to be uppercase.
 """
 #
 #
@@ -41,9 +41,9 @@ import types_builtin as B
 #
 from error_type import Error
 
-#t_OptError = B.t_Union[B.t_Any, Error]
+#OptError = B.Union[B.Any, Error]
 
-def is_given_type(obj: B.t_Any, TYPE: type):
+def is_given_type(obj: B.Any, TYPE: type):
 #(
     return type(obj) == TYPE
 #)

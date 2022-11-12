@@ -32,31 +32,43 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 """
 # TODO(armagans): Differences between t_Any && Generic[T]
+from dataclasses import dataclass
 import itertools as IT
 #
 import types_builtin as B
 import types_created as C
 #
 # B.T == A Generic type.
-# B.U == A Generic type.
+# B.K == A Generic type.
 #
+@dataclass
+class FnData:
+#(
+    fn: B.Fn
+    argdata: B.Any = None
+#)
+
+
 def ref_get_data(ref: B.T \
-        , fn_getter: B.t_Fn[[B.T], B.U]) \
-        -> B.U:
+        , fn_data: FnData) \
+        -> B.K:
     """ ( Returns opaque location for one given item. )
 
     ( * Might throw exception )
     """
 # (
-    return fn_getter(ref)
+    _fn: B.Fn[[B.T, B.Any], B.K] = fn_data.fn
+    _args: B.Any = fn_data.argdata
+    
+    return _fn(ref, _args)
 # )
 
 
 def ref_set_data(ref: B.T \
-        , fn_set:B.t_Fn[[B.T], B.t_Bool] \
+        , fn_set:B.Fn[[B.T], B.Bool] \
         , *args \
         , **kwargs) \
-        -> B.t_Bool:
+        -> B.Bool:
     """ ( Sets some data for one given item. )
     ( Returns True if successfully set. Returns False otherwise.)
     
@@ -70,8 +82,8 @@ def ref_set_data(ref: B.T \
 
 
 def ref_len(ref: B.T
-        , fn_len: B.t_Fn[[B.T], B.t_Int]) \
-        -> B.t_Int:
+        , fn_len: B.Fn[[B.T], B.Int]) \
+        -> B.Int:
     """ ( Returns opaque len for one given item. )
 
     ( * Might throw exception )
@@ -82,8 +94,8 @@ def ref_len(ref: B.T
 
 
 def ref_bytes(ref: B.T \
-        , fn_bytes: B.t_Fn[[B.T], B.t_Bytes]) \
-        -> B.t_Bytes:
+        , fn_bytes: B.Fn[[B.T], B.Bytes]) \
+        -> B.Bytes:
     """ ( Returns a slice (can be all) of the bytes for one given item. )
 
     ( * Might throw exception )
@@ -93,9 +105,46 @@ def ref_bytes(ref: B.T \
 # )
 
 
-def ref_group_by_key(refs: B.t_Iter[B.T] \
-        , fn_key_getter: B.t_Fn[[B.T], B.U]) \
-        -> B.t_Tuple[B.t_Iter, B.t_Iter[C.Error]]:
+def _group_by_key_helper(ref_key_itr: B.Iter[B.Tuple[B.T, B.K]] \
+        , fn_sort_key: B.Fn[ [B.Tuple[B.T, B.K]] , B.Union[B.T, B.K]]) \
+        -> B.Iter[B.Tuple[B.K, B.Iter[B.T]]]:
+    """ Assumes keys are sortable.
+    
+    Does what itertools.groupby does. For every group,
+    its key is present only once. Not like groupby where every element
+    has the key also.
+    """
+#(
+    if type(ref_key_itr) != list:
+    #(
+        data = list(ref_key_itr)
+    #)
+    data.sort(key = fn_sort_key)
+    
+    groups = []
+    
+    for i in range(1, len(data)):
+    #(
+        prev = data[i-1]
+        curr = data[i]
+        key_prev = prev[1]
+        key_curr = curr[1]
+        
+        new_grp = []
+        while key_prev == key_curr:
+        #(
+            new_grp.append()
+        #)
+        
+    #)
+    
+    return None
+#)
+
+
+def ref_group_by_key(refs: B.Iter[B.T] \
+        , fn_key_getter: B.Fn[[B.T], B.K]) \
+        -> B.Tuple[B.Iter, B.Iter[C.Error]]:
     """ ( Returns 2-tuple X: X[0] is 2-tuple list Y where first element
     of each tuple of Y is a key and second element is an iterable where each element
     returns that key from fn_key_getter)
@@ -104,8 +153,8 @@ def ref_group_by_key(refs: B.t_Iter[B.T] \
 # (
     # TODO(armagans): Create (key, ref) iter. | sort by key. (Use itertools.groupby) | Create groups from
     # sorted iterable.
-    key_refs: B.t_List[B.t_Tuple[B.U, B.T]] = []
-    errors: B.t_List[C.Error] = []
+    key_refs: B.List[B.Tuple[B.K, B.T]] = []
+    errors: B.List[C.Error] = []
     
     for rf in refs:
     #(
@@ -127,19 +176,22 @@ def ref_group_by_key(refs: B.t_Iter[B.T] \
 
 def main(*args, **kwargs):
 #(
-    lst: B.t_List[B.t_List[B.t_Int]] = [[1,2,3], [4,5]]
+    lst: B.List[B.List[B.Int]] = [[1,2,3], [4,5]]
     
-    def get_list(lst: B.t_List[B.t_List[B.T]]) \
-            -> B.t_List[B.T]:
+    def get_list(lst: B.List[B.List[B.T]] \
+            , args = None) \
+            -> B.List[B.T]:
     #(
         return lst[0]
     #)
     
-    itm: B.t_List[B.t_Int] = ref_get_data(lst, get_list)
-    itm_2: B.t_List[B.t_Bytes] = ref_get_data(lst, get_list)
+    fn_data = FnData(get_list)
     
-    def get_len(lst: B.t_List[B.T]) \
-            -> B.t_Int:
+    itm: B.List[B.Int] = ref_get_data(lst, fn_data)
+    itm_2: B.List[B.Bytes] = ref_get_data(lst, fn_data)
+    
+    def get_len(lst: B.List[B.T]) \
+            -> B.Int:
     #(
         return len(lst)
     #)
