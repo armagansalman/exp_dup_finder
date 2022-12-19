@@ -63,7 +63,7 @@ class Error:
     
     def __str__(self):
     #(
-        return f"[~ ERROR OBJECT ~] Data: {str(self._data)} | Error message: {str(self._err_msg)}"
+        return f"<[ ERROR OBJECT ]> Data: {str(self._data)} | Error message: {str(self._err_msg)}"
     #)
 #)
 

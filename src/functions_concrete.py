@@ -36,17 +36,17 @@ import types_builtin as B
 import types_specific as S
 
 
-def local_file_size(path: B.t_Str) \
-        -> B.t_Size:
+def local_file_size(path: B.Str) \
+        -> B.Size:
     """docstr"""
 # (
     return os.path.getsize(path)
 # )
 
 
-def read_local_file_bytes(file_path: B.t_Str, start_offset: B.t_Int,
-                          end_offset: B.t_Int) \
-        -> B.t_Bytes:
+def read_local_file_bytes(file_path: B.Str, staroffset: B.Int,
+                          end_offset: B.Int) \
+        -> B.Bytes:
     """Returns either the requested byte sequence or throws an Exception.
 
     * Index values are inclusive.
@@ -55,25 +55,25 @@ def read_local_file_bytes(file_path: B.t_Str, start_offset: B.t_Int,
     # TODO(armagan): Read by chunks.
     with open(file_path, "rb") as in_fobj:
         # (
-        if start_offset > 0:
+        if staroffset > 0:
             # (
-            in_fobj.seek(start_offset)
+            in_fobj.seek(staroffset)
         # )
-        elif start_offset < 0:
+        elif staroffset < 0:
             # (
-            raise Exception("Negative start_offset was given for file.")
+            raise Exception("Negative staroffset was given for file.")
         # )
 
-        return in_fobj.read(end_offset - start_offset + 1)
+        return in_fobj.read(end_offset - staroffset + 1)
     # )
 # )
 
 
-def get_local_dir_files(dirpath: B.t_Str) \
-        -> B.t_List[B.t_Str]:
+def gelocal_dir_files(dirpath: B.Str) \
+        -> B.List[B.Str]:
     """Might throw an Exception."""
 # (
-    rec_files: B.t_List = []
+    rec_files: B.List = []
     # TODO(armaganslmn): ??? Error handling.
     #ap = os.path.abspath(PATH)
 

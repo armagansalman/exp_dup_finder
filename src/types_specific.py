@@ -31,11 +31,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 #
 #
-""" 
-    All types have to start with t_
-    After t_ , first letter have to be uppercase.
-    After t_, first letter of every word have to be uppercase.
-"""
 #
 #
 #

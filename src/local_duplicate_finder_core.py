@@ -43,9 +43,9 @@ import types_created as C
 import local_path_functions as LPF
 #
 #
-def discard_subdirs(refs: B.t_Iter[B.T] \
-        , fn_pathstr_getter: B.t_Fn[[B.T], B.t_Str]) \
-        -> B.t_List[B.T]:
+def discard_subdirs(refs: B.Iter[B.T] \
+        , fn_pathstr_getter: B.Fn[[B.T], B.Str]) \
+        -> B.List[B.T]:
     """ ( Given directories DS, returns a new iterable of directories DR
     where no element of DR is a subdirectory of any element of DS. )
     ( Assumes given paths from refs are valid directories. )
@@ -53,7 +53,7 @@ def discard_subdirs(refs: B.t_Iter[B.T] \
     ( * Might throw exception. )
     """
 #(
-    ref_list: B.t_List[B.T] = list(refs)
+    ref_list: B.List[B.T] = list(refs)
     
     if len(ref_list) < 2:
         # No subdirs can exist in ref_list. Returns as it is.
@@ -80,7 +80,7 @@ def discard_subdirs(refs: B.t_Iter[B.T] \
     prev = ref_path_tpls[0]
     
     prev_ref: B.T = prev[0]
-    prev_path: B.t_Str = prev[1]
+    prev_path: B.Str = prev[1]
     
     nonsub_dirs = [prev_ref]
     
@@ -89,7 +89,7 @@ def discard_subdirs(refs: B.t_Iter[B.T] \
     #(
         curr = ref_path_tpls[ix]
         curr_ref: B.T = curr[0]
-        curr_path: B.t_Str = curr[1]
+        curr_path: B.Str = curr[1]
         
         prev_ref = prev[0]
         prev_path = prev[1]
@@ -112,35 +112,35 @@ def discard_subdirs(refs: B.t_Iter[B.T] \
 #)
 
 
-def find_dir_files_recursive(dir_refs: B.t_Iter[B.T] \
-        , fn_pathstr_getter: B.t_Fn[[B.T], B.t_Str]) \
-        -> B.t_Iter[B.t_Tuple[B.T, B.t_Iter[B.t_Str]]]:
+def find_dir_files_recursive(dir_refs: B.Iter[B.T] \
+        , fn_pathstr_getter: B.Fn[[B.T], B.Str]) \
+        -> B.Iter[B.Tuple[B.T, B.Iter[B.Str]]]:
     """ Given opaque refs which somehow has directory path data strings,
     returns all files (as absolute posix paths) under those directories.
     """
 #(
-    nonsub_dirs: B.t_Iter[B.T] = discard_subdirs(dir_refs, fn_pathstr_getter)
+    nonsub_dirs: B.Iter[B.T] = discard_subdirs(dir_refs, fn_pathstr_getter)
     
     fn_pg = fn_pathstr_getter
     
-    return map(lambda x: (x, LPF.get_fpaths_recursively(fn_pg(x))) , nonsub_dirs)
+    return map(lambda x: (x, LPF.gefpaths_recursively(fn_pg(x))) , nonsub_dirs)
 #)
 
 
-t_IterPaths = B.t_Iter[B.t_Str]
-def combine_pathlists_from_tuples(dirref_pathlist_tpls \
-        : B.t_Iter[B.t_Tuple[B.T, t_IterPaths]]) \
-        -> t_IterPaths:
+IterPaths = B.Iter[B.Str]
+def combine_pathlists_from_tuples(dirref_pathlistpls \
+        : B.Iter[B.Tuple[B.T, IterPaths]]) \
+        -> IterPaths:
     #
 #(
-    all_paths: B.t_List[B.t_Str] = []
+    all_paths: B.List[B.Str] = []
     
-    for dirref, pathiter in dirref_pathlist_tpls:
+    for dirref, pathiter in dirref_pathlistpls:
     #(
         """
         paths = pathiter
         
-        if not C.is_given_type(pathiter, B.t_List):
+        if not C.is_given_type(pathiter, B.List):
         #(
             paths = list(pathiter)
         #)
@@ -160,7 +160,7 @@ def main(*args, **kwargs):
         , "/home/genel/Documents/"
         , "/home/genel" \
         , "/home/genel" \
-        , "/home/genel/Downloads/Git_aosa_files/" \
+        , "/home/genel/Downloads/Giaosa_files/" \
         , "/home/genel/Downloads/" \
         , "/home/genel/Downloadsasd/" \
         , "computer:///" \
@@ -181,11 +181,11 @@ def main(*args, **kwargs):
     #)
     print("~~~~~~~~~")
     
-    dir_filelist_tpls = tuple(find_dir_files_recursive(nonsub_dirs, lambda x: x))
+    dir_filelistpls = tuple(find_dir_files_recursive(nonsub_dirs, lambda x: x))
     
     """
     print("(Dir, filelist) tuples:")
-    for x, lst in dir_filelist_tpls:
+    for x, lst in dir_filelistpls:
     #(
         print(f"New dir: {x}")
         for y in lst:
@@ -194,7 +194,7 @@ def main(*args, **kwargs):
     print("~~~~~~~~~")
     """
     
-    comb_paths = combine_pathlists_from_tuples(dir_filelist_tpls)
+    comb_paths = combine_pathlists_from_tuples(dir_filelistpls)
     
     print("Combined paths:")
     for x in comb_paths:
@@ -204,11 +204,11 @@ def main(*args, **kwargs):
     print("~~~~~~~~~")
     
     
-    x: C.t_OptError = C.Error("data", "msg")
+    x: C.OptError = C.Error("data", "msg")
     print(x)
     print(type(x) == C.Error)
     print(C.is_given_type(x, C.Error))
-    y: C.t_OptError = "a"
+    y: C.OptError = "a"
     y = 5
     
 #)

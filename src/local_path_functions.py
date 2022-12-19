@@ -40,8 +40,8 @@ import types_builtin as B
 #)
 
 
-def get_fpaths_recursively(PATH: B.t_Str) \
-        -> B.t_List[B.t_Str]:
+def gefpaths_recursively(PATH: B.Str) \
+        -> B.List[B.Str]:
 #(
     rec_files: list = []
     # TODO(armaganslmn): ??? Error handling.
@@ -75,11 +75,11 @@ def get_fpaths_recursively(PATH: B.t_Str) \
 #)
 
 
-def get_fpaths_from_path_iter(paths_iter: B.t_List[B.t_Str]):
+def gefpaths_from_path_iter(paths_iter: B.List[B.Str]):
 #(
-    if type(paths_iter[0]) != B.t_Str or type(paths_iter[-1]) != B.t_Str:
+    if type(paths_iter[0]) != B.Str or type(paths_iter[-1]) != B.Str:
     #(
-        raise Exception("A list of B.t_Str must be given.")
+        raise Exception("A list of B.Str must be given.")
     #)
     
     file_paths: list = []
@@ -95,7 +95,7 @@ def get_fpaths_from_path_iter(paths_iter: B.t_List[B.t_Str]):
     
     for string in path_strings:
     #(
-        file_paths.extend( get_fpaths_recursively(string) )
+        file_paths.extend( gefpaths_recursively(string) )
     #)
     
     return file_paths

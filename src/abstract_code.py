@@ -31,7 +31,7 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 """
-# TODO(armagans): Differences between t_Any && Generic[T]
+# TODO(armagans): Differences between Any && Generic[T]
 from dataclasses import dataclass
 import itertools as IT
 #
@@ -49,7 +49,7 @@ class FnData:
 #)
 
 
-def ref_get_data(ref: B.T \
+def ref_gedata(ref: B.T \
         , fn_data: FnData) \
         -> B.K:
     """ ( Returns opaque location for one given item. )
@@ -64,7 +64,7 @@ def ref_get_data(ref: B.T \
 # )
 
 
-def ref_set_data(ref: B.T \
+def ref_sedata(ref: B.T \
         , fn_set:B.Fn[[B.T], B.Bool] \
         , *args \
         , **kwargs) \
@@ -106,7 +106,7 @@ def ref_bytes(ref: B.T \
 
 
 def _group_by_key_helper(ref_key_itr: B.Iter[B.Tuple[B.T, B.K]] \
-        , fn_sort_key: B.Fn[ [B.Tuple[B.T, B.K]] , B.Union[B.T, B.K]]) \
+        , fn_sorkey: B.Fn[ [B.Tuple[B.T, B.K]] , B.Union[B.T, B.K]]) \
         -> B.Iter[B.Tuple[B.K, B.Iter[B.T]]]:
     """ Assumes keys are sortable.
     
@@ -119,7 +119,7 @@ def _group_by_key_helper(ref_key_itr: B.Iter[B.Tuple[B.T, B.K]] \
     #(
         data = list(ref_key_itr)
     #)
-    data.sort(key = fn_sort_key)
+    data.sort(key = fn_sorkey)
     
     groups = []
     
@@ -187,8 +187,8 @@ def main(*args, **kwargs):
     
     fn_data = FnData(get_list)
     
-    itm: B.List[B.Int] = ref_get_data(lst, fn_data)
-    itm_2: B.List[B.Bytes] = ref_get_data(lst, fn_data)
+    itm: B.List[B.Int] = ref_gedata(lst, fn_data)
+    itm_2: B.List[B.Bytes] = ref_gedata(lst, fn_data)
     
     def get_len(lst: B.List[B.T]) \
             -> B.Int:
@@ -205,12 +205,12 @@ def main(*args, **kwargs):
     assert(bytes(lst[0]) == ref_bytes(itm, lambda x: bytes(x)))
     
     data = 5
-    set_func = lambda x,val: x.append(val)
-    ref_set_data(lst, set_func, data)
+    sefunc = lambda x,val: x.append(val)
+    ref_sedata(lst, sefunc, data)
     
     assert(lst[-1] == data)
     
-    print(f"~[ INFO ]~ Passed some tests. Module name: `{__name__}`.")
+    print(f"<[ INFO ]> Passed some tests. Module name: `{__name__}`.")
     
     to_group = [[1,2],[1,2],[1,3],[1,4],[3,4],[5,6],[7,8],["abc"],999]
     #to_group.sort(key = lambda x: x[0], reverse = True)
@@ -222,7 +222,7 @@ def main(*args, **kwargs):
     #(
         print(k)
         print(list(grp))
-        print("~~~~~~~~~~~~~")
+        print("~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~")
     #)
     
     print(f"{errors = }")

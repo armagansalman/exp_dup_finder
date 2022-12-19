@@ -36,74 +36,74 @@ import types_builtin as B
 import types_specific as S
 
 
-def get_path_str(ref: S.t_Opak, imp_get_path) \
-        -> B.t_Str:
+def gepath_str(ref: S.Opak, imp_gepath) \
+        -> B.Str:
     """Return path str of a file of directory.
 
     * Might throw exception.
     """
 # (
-    return imp_get_path(ref)
+    return imp_gepath(ref)
 # )
 
 
-def iter_get_path_str(ref_iter: S.t_IterOpak, imp_get_path) \
-        -> B.t_Iter[B.t_Tuple[S.t_Opak, B.t_Str]]:
+def iter_gepath_str(ref_iter: S.IterOpak, imp_gepath) \
+        -> B.Iter[B.Tuple[S.Opak, B.Str]]:
     """Returns (ref, ref's path) tuple.
 
     * Might throw exception.
     """
 # (
-    return map(lambda ref: (ref, imp_get_path(ref)), ref_iter)
+    return map(lambda ref: (ref, imp_gepath(ref)), ref_iter)
 # )
 
 
-def get_dir_filepaths_recursive(ref_dir: S.t_Opak, imp_get_dir_files) \
-        -> B.t_Iter[B.t_Str]:
+def gedir_filepaths_recursive(ref_dir: S.Opak, imp_gedir_files) \
+        -> B.Iter[B.Str]:
     """Returns file path strings. Includes files from subdirectories.
 
     * Might throw exception.
     """
 # (
-    return imp_get_dir_files(ref_dir)
+    return imp_gedir_files(ref_dir)
 # )
 
 
-def iter_get_dir_filepaths_recursive(ref_iter: S.t_IterOpak, imp_get_dir_files) \
-        -> B.t_Iter[B.t_Tuple[S.t_Opak, B.t_Iter[B.t_Str]]]:
+def iter_gedir_filepaths_recursive(ref_iter: S.IterOpak, imp_gedir_files) \
+        -> B.Iter[B.Tuple[S.Opak, B.Iter[B.Str]]]:
     """Returns (ref_dir, file path strings) tuples. Includes files from subdirectories.
 
     * Might throw exception.
     """
 # (
-    return map(lambda ref: (ref, imp_get_dir_files(ref)), ref_iter)
+    return map(lambda ref: (ref, imp_gedir_files(ref)), ref_iter)
 # )
 
 
-def get_size(ref: S.t_Opak, imp_get_size) \
-        -> B.t_Size:
+def gesize(ref: S.Opak, imp_gesize) \
+        -> B.Size:
     """Returns size (non-negative int) of an object.
 
     * Might throw exception.
     """
 # (
-    return imp_get_size(ref)
+    return imp_gesize(ref)
 # )
 
 
-def iter_get_size(ref_iter: S.t_IterOpak, imp_get_size) \
-        -> B.t_Iter[B.t_Tuple[S.t_Opak, B.t_Size]]:
+def iter_gesize(ref_iter: S.IterOpak, imp_gesize) \
+        -> B.Iter[B.Tuple[S.Opak, B.Size]]:
     """Returns (ref, ref's size) tuple. Size is non-negative int.
 
     * Might throw exception.
     """
 # (
-    return map(lambda ref: (ref, imp_get_size(ref)), ref_iter)
+    return map(lambda ref: (ref, imp_gesize(ref)), ref_iter)
 # )
 
 
-def get_bytes(ref: S.t_Opak, imp_get_bytes) \
-        -> B.t_Bytes:
+def gebytes(ref: S.Opak, imp_get_bytes) \
+        -> B.Bytes:
     """Returns byte sequence from given ref.
 
     * Might throw exception.
@@ -113,8 +113,8 @@ def get_bytes(ref: S.t_Opak, imp_get_bytes) \
 # )
 
 
-def iter_get_bytes(ref_iter: S.t_IterOpak, imp_get_bytes) \
-        -> B.t_Iter[B.t_Tuple[S.t_Opak, B.t_Bytes]]:
+def iter_gebytes(ref_iter: S.IterOpak, imp_get_bytes) \
+        -> B.Iter[B.Tuple[S.Opak, B.Bytes]]:
     """Returns (ref, ref's byte sequence) tuple.
 
     * Might throw exception.
