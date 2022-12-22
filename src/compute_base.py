@@ -52,7 +52,7 @@ class FuncData:
 
 
 @dataclass
-class CallData:
+class Command:
 	""" ! """
 #(
 	target: TD.Any
@@ -60,17 +60,24 @@ class CallData:
 #)
 
 
-def fn_apply(target: TD.T, fn_val: FuncData):
+def call_func(target: TD.T, func: TD.Callable):
+	""" ! """
+#(
+	return func(target)
+#)
+
+
+def call_fndata(target: TD.T, fn_val: FuncData):
 	""" ! """
 #(
 	return fn_val.func(target, fn_val.data)
 #)
 
 
-def invoke(cd: CallData):
+def call_command(cd: Command):
 	""" ! """
 #(
-	return fn_apply(cd.target, cd.fn_val)
+	return call_fndata(cd.target, cd.fn_val)
 #)
 
 
@@ -83,8 +90,8 @@ def test_1():
 	
 	fnv = FuncData(func)
 	
-	res = fn_apply(data, fnv)
-	res2 = invoke(CallData(data, fnv))
+	res = call_fndata(data, fnv)
+	res2 = call_command(Command(data, fnv))
 	
 	assert(res == res2)
 	# ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
@@ -104,12 +111,12 @@ def test_2():
 	
 	fndata_10_adder = FuncData(fn_adder, (10,)) # arg given using Tuple
 	
-	res = fn_apply(data[0], fndata_10_adder)
+	res = call_fndata(data[0], fndata_10_adder)
 	assert(res == data[0] + 10)
 	# ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 	fndata_10_adder2 = FuncData(fn_adder, [10]) # arg given using List
 	
-	res2 = fn_apply(data[-1], fndata_10_adder)
+	res2 = call_fndata(data[-1], fndata_10_adder)
 	assert(res2 == data[-1] + 10)
 	
 	return True
@@ -128,7 +135,7 @@ def test_3():
 	
 	fndata_10_mult = FuncData(fn_mult, {"multiplier": 10}) # arg given using Tuple
 	
-	res = fn_apply(data[0], fndata_10_mult)
+	res = call_fndata(data[0], fndata_10_mult)
 	assert(res == data[0] * 10)
 	# ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
 	
@@ -140,7 +147,7 @@ def main(params):
 	""" ! """
 #(
 	tests = [ \
-		(test_1, "Test | fn_apply, invoke ; None argument") \
+		(test_1, "Test | call_fndata, call_command ; None argument") \
 		,(test_2, "Test | with argument; sequence type argument") \
 		,(test_3, "Test | with argument; dictionary type argument") \
 			]
