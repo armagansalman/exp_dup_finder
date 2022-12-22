@@ -31,34 +31,26 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
 #(
+## Standard imports:
+import os
+#)
+
+#(
 ## Non-standard imports:
 import type_definitions as TD
 import compute_base as CB
 #)
 
 
-def abf_get_size(target: TD.Any, get_size_fndata: CB.FuncData) \
-		-> TD.Int:
-	""" Returns size of given target as an int (at least 0).
+def get_size_local_file(fpath: TD.Str) -> TD.Int:
+	""" Returns local file size (in bytes) as an int. At least 0.
 	CAN RAISE EXCEPTION!
-	
-	Target can be any type of data.
-	get_size_fndata has the capability to get given target's size. """
+	fpath can be any valid path string. """
 #(
-	return CB.call_fndata(target, get_size_fndata)
+	return os.path.getsize(fpath)
 #)
 
 
-def abf_get_byte_seq(target: TD.Any, get_bytes_fndata: CB.FuncData) \
-		-> TD.Bytes:
-	""" Returns sequential bytes from given target.
-	CAN RAISE EXCEPTION!
-	
-	Target can be any type of data.
-	get_bytes_fndata has the capability to get given target's bytes. """
-#(
-	return CB.call_fndata(target, get_bytes_fndata)
-#)
 
 
 
