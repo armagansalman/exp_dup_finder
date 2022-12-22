@@ -43,6 +43,12 @@ import F_0x2_ as PrcAbs
 import F_0x3_ as PrcCon
 #)
 
+def GET_FILENAME():
+#(
+	FILENAME = "main"
+	return FILENAME
+#)
+
 
 def test_get_size():
 	""" a """
@@ -81,6 +87,8 @@ def main(params):
 		,(test_get_bytes, "Test | local file bytes retrieve test") \
 			]
 	#
+	
+	print(f"<[ INFO ]> Running FILENAME: {GET_FILENAME()}")
 	
 	for fn_test, summary in tests:
 	#(

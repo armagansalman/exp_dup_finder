@@ -30,7 +30,6 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-""" Original file name: compute_base.py """
 #(
 ## Standard imports:
 from dataclasses import dataclass
@@ -40,6 +39,12 @@ from dataclasses import dataclass
 #(
 ## Non-standard imports:
 import F_0x0_ as TD
+#)
+
+def GET_FILENAME():
+#(
+	FILENAME = "compute_base"
+	return FILENAME
 #)
 
 

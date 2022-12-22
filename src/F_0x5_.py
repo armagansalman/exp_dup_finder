@@ -35,6 +35,12 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 from F_0x1_ import *
 #)
 
+def GET_FILENAME():
+#(
+	FILENAME = "test_compute_base"
+	return FILENAME
+#)
+
 
 def test_1():
 	""" ! """
@@ -107,6 +113,8 @@ def main(params):
 		,(test_3, "Test | with argument; dictionary type argument") \
 			]
 	#
+	
+	print(f"<[ INFO ]> Running FILENAME: {GET_FILENAME()}")
 	
 	for fn_test, summary in tests:
 	#(

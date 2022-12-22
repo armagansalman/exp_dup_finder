@@ -30,7 +30,6 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-
 from typing import Iterable as Iter
 from typing import List
 from typing import Set
@@ -45,6 +44,12 @@ from typing import Sequence as Seq
 from typing import Union
 from typing import TypeVar
 
+def GET_FILENAME():
+#(
+	FILENAME = "type_definitions"
+	return FILENAME
+#)
+
 Bool = bool
 Int = int
 Str = str
@@ -58,6 +63,7 @@ K = TypeVar('K')
 # Custom type definitions:
 NumNatural = Int  # Starts from 0.
 Size = NumNatural
+
 
 class Type_Void:
 	""" Is used to check if a reference holds a valid value or not.

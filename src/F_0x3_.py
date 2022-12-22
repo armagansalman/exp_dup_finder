@@ -41,6 +41,12 @@ import F_0x0_ as TD
 import F_0x1_ as CB
 #)
 
+def GET_FILENAME():
+#(
+	FILENAME = "procedures_concrete"
+	return FILENAME
+#)
+
 
 def get_size_local_file(file_path: TD.Str, DATA: TD.Any) -> TD.Int:
 	""" Returns local file size (in bytes) as an int. At least 0.

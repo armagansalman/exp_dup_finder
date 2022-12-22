@@ -30,6 +30,8 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
+FILENAME = "file_id_tuples"
+
 NAMESPACE = "exp_dup_finder"
 
 id_filename_tuples = [ \
@@ -45,7 +47,7 @@ id_filename_tuples = [ \
 	#,(0x, "") \
 	]
 #
-LAST_MODIFIED = "2022-12-22T20-02-17"
+LAST_MODIFIED = "2022-12-22T20-30-08"
 
 
 

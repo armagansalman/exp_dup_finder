@@ -36,6 +36,12 @@ import F_0x0_ as TD
 import F_0x1_ as CB
 #)
 
+def GET_FILENAME():
+#(
+	FILENAME = "procedures_abstract"
+	return FILENAME
+#)
+
 
 def abf_get_size(target: TD.Any, get_size_fndata: CB.FuncData) \
 		-> TD.Int:
