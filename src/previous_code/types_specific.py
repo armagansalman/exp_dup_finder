@@ -36,3 +36,4 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #
 import types_builtin as B
 
+IterOpak = B.Iter[B.Any]

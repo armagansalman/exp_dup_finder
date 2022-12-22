@@ -33,6 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 #(
 ## Standard imports:
 from dataclasses import dataclass
+	#, field, KW_ONLY
 #)
 
 #(
@@ -40,12 +41,13 @@ from dataclasses import dataclass
 import type_definitions as TD
 #)
 
+
 @dataclass
 class FuncData:
 	""" ! """
 #(
 	func: TD.Callable
-	argdata: TD.Any
+	data: TD.Any = None
 #)
 
 
@@ -57,22 +59,11 @@ class CallData:
 	fn_val: FuncData
 #)
 
-"""
-def apply_fn(target: TD.T, fn: TD.Callable):
-	# !
-#(
-	return fn(target)
-#)
-"""
 
 def fn_apply(target: TD.T, fn_val: FuncData):
 	""" ! """
 #(
-	if fn_val.argdata == None:
-	#(
-		return fn_val.func(target)
-	#)
-	return fn_val.func(target, fn_val.argdata)
+	return fn_val.func(target, fn_val.data)
 #)
 
 
@@ -88,22 +79,82 @@ def test_1():
 #(
 	data = [1,2,3]
 	
-	func = lambda x: len(x)
+	func = lambda x, DATA: len(x)
 	
-	fnv = FuncData(func, argdata=None)
+	fnv = FuncData(func)
 	
 	res = fn_apply(data, fnv)
 	res2 = invoke(CallData(data, fnv))
 	
-	print(res)
-	print(res2)
+	assert(res == res2)
+	# ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+	return True
+#)
+
+
+def test_2():
+	""" ! """
+#(
+	data = [1,2,3]
+	
+	def fn_adder(t, DATA):
+	#(
+		return t + DATA[0]
+	#)
+	
+	fndata_10_adder = FuncData(fn_adder, (10,)) # arg given using Tuple
+	
+	res = fn_apply(data[0], fndata_10_adder)
+	assert(res == data[0] + 10)
+	# ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+	fndata_10_adder2 = FuncData(fn_adder, [10]) # arg given using List
+	
+	res2 = fn_apply(data[-1], fndata_10_adder)
+	assert(res2 == data[-1] + 10)
+	
+	return True
+#)
+
+
+def test_3():
+	""" ! """
+#(
+	data = [1,2,3]
+	
+	def fn_mult(t, DATA):
+	#(
+		return t * DATA["multiplier"]
+	#)
+	
+	fndata_10_mult = FuncData(fn_mult, {"multiplier": 10}) # arg given using Tuple
+	
+	res = fn_apply(data[0], fndata_10_mult)
+	assert(res == data[0] * 10)
+	# ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+	
+	return True
 #)
 
 
 def main(params):
 	""" ! """
 #(
-	test_1()
+	tests = [ \
+		(test_1, "Test | fn_apply, invoke ; None argument") \
+		,(test_2, "Test | with argument; sequence type argument") \
+		,(test_3, "Test | with argument; dictionary type argument") \
+			]
+	#
+	
+	for fn_test, summary in tests:
+	#(
+		print(f"<[ INFO ]> Running: {fn_test.__name__}")
+		print(f"Summary: {summary}")
+		
+		fn_test()
+	#)
+	
+	print("<[ INFO ]> All tests PASSED.")
 #)
 
 

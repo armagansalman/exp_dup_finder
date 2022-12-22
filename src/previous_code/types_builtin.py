@@ -31,12 +31,6 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
 
-""" 
-    All types have to start with 
-    After  , first letter have to be uppercase.
-"""
-
-
 from typing import Iterable as Iter
 from typing import List as List
 from typing import Set as Set
