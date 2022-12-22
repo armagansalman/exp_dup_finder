@@ -31,59 +31,34 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
 #(
-## Standard imports:
-from dataclasses import dataclass
-	#, field, KW_ONLY
-#)
-
-#(
 ## Non-standard imports:
-import type_definitions_0x0 as TD
+import F_0x0_ as TD
+import F_0x1_ as CB
 #)
 
 
-@dataclass
-class FuncData:
-	""" ! """
+def abf_get_size(target: TD.Any, get_size_fndata: CB.FuncData) \
+		-> TD.Int:
+	""" Returns size of given target as an int (at least 0).
+		* CAN RAISE EXCEPTION!
+		
+		Target can be any type of data.
+		get_size_fndata has the capability to get given target's size. """
 #(
-	func: TD.Callable
-	data: TD.Any = None
+	return CB.call_fndata(target, get_size_fndata)
 #)
 
 
-@dataclass
-class Command:
-	""" ! """
+def abf_get_byte_seq(target: TD.Any, get_bytes_fndata: CB.FuncData) \
+		-> TD.Bytes:
+	""" Returns sequential bytes from given target.
+		* CAN RAISE EXCEPTION!
+		
+		Target can be any type of data.
+		get_bytes_fndata has the capability to get given target's bytes. """
 #(
-	target: TD.Any
-	fn_val: FuncData
+	return CB.call_fndata(target, get_bytes_fndata)
 #)
 
 
-def call_func(target: TD.T, func: TD.Callable):
-	""" CAN RAISE EXCEPTION! """
-#(
-	return func(target)
-#)
-
-
-def call_fndata(target: TD.T, fn_val: FuncData):
-	""" CAN RAISE EXCEPTION! """
-#(
-	return fn_val.func(target, fn_val.data)
-#)
-
-
-def call_command(cd: Command):
-	""" CAN RAISE EXCEPTION! """
-#(
-	return call_fndata(cd.target, cd.fn_val)
-#)
-
-
-if __name__ == "__main__":
-	""" ! """
-#(
-	raise Exception("Not Runnable Module.")
-#)
 

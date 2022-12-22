@@ -31,34 +31,47 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
 #(
+## Standard imports:
+import os
+#)
+
+#(
 ## Non-standard imports:
-import type_definitions_0x0 as TD
-import compute_base_0x1 as CB
+import F_0x0_ as TD
+import F_0x1_ as CB
 #)
 
 
-def abf_get_size(target: TD.Any, get_size_fndata: CB.FuncData) \
-		-> TD.Int:
-	""" Returns size of given target as an int (at least 0).
+def get_size_local_file(file_path: TD.Str, DATA: TD.Any) -> TD.Int:
+	""" Returns local file size (in bytes) as an int. At least 0.
 		* CAN RAISE EXCEPTION!
-		
-		Target can be any type of data.
-		get_size_fndata has the capability to get given target's size. """
+		file_path can be any valid path string.
+		DATA can be any type of data. Currently not used. """
 #(
-	return CB.call_fndata(target, get_size_fndata)
+	return os.path.getsize(file_path)
 #)
 
 
-def abf_get_byte_seq(target: TD.Any, get_bytes_fndata: CB.FuncData) \
-		-> TD.Bytes:
-	""" Returns sequential bytes from given target.
+def get_bytes_local_file(file_path: TD.Str, DATA: TD.Any) -> TD.Bytes:
+	""" Returns byte sequence from given local file path.
 		* CAN RAISE EXCEPTION!
-		
-		Target can be any type of data.
-		get_bytes_fndata has the capability to get given target's bytes. """
+		Indices are both inclusive. """
 #(
-	return CB.call_fndata(target, get_bytes_fndata)
+	start_index = DATA["start_index"]
+	end_index = DATA["end_index"]
+	
+	with open(file_path, "rb") as in_fobj:
+		# (
+		if start_index == 0:
+			# (
+			return in_fobj.read(end_index - start_index + 1)
+		# )
+		else:
+			# (
+			in_fobj.seek(start_index)
+			return in_fobj.read(end_index - start_index + 1)
+		# )
+	# )
 #)
-
 
 

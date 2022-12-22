@@ -31,45 +31,70 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
 #(
-## Standard imports:
-# import os
-#)
-
-#(
 ## Non-standard imports:
-import type_definitions_0x0 as TD
-import compute_base_0x1 as CB
-import procedures_abstract_0x2 as PrcAbs
-import procedures_concrete_0x3 as PrcCon
+from F_0x1_ import *
 #)
 
 
-def test_get_size():
-	""" a """
+def test_1():
+	""" ! """
 #(
-	fname = "./example_file_1.txt" # 10 byte file.
-	FSIZE = 10
+	data = [1,2,3]
 	
-	fdat = CB.FuncData(PrcCon.get_size_local_file)
+	func = lambda x, DATA: len(x)
 	
-	fsz = PrcAbs.abf_get_size(fname, fdat)
+	fnv = FuncData(func)
 	
-	assert(fsz == FSIZE)
+	res = call_fndata(data, fnv)
+	res2 = call_command(Command(data, fnv))
+	
+	assert(res == res2)
+	# ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+	return True
 #)
 
 
-def test_get_bytes():
-	""" a """
+def test_2():
+	""" ! """
 #(
-	fname = "./example_file_1.txt" # 10 byte file.
-	byte_seq = bytes("123", encoding="utf-8")
+	data = [1,2,3]
 	
-	fdata = {"start_index":0, "end_index": 2} # First 3 bytes.
-	fdat = CB.FuncData(PrcCon.get_bytes_local_file, fdata)
+	def fn_adder(t, DATA):
+	#(
+		return t + DATA[0]
+	#)
 	
-	fbytes = PrcAbs.abf_get_byte_seq(fname, fdat)
+	fndata_10_adder = FuncData(fn_adder, (10,)) # arg given using Tuple
 	
-	assert(fbytes == byte_seq)
+	res = call_fndata(data[0], fndata_10_adder)
+	assert(res == data[0] + 10)
+	# ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+	fndata_10_adder2 = FuncData(fn_adder, [10]) # arg given using List
+	
+	res2 = call_fndata(data[-1], fndata_10_adder)
+	assert(res2 == data[-1] + 10)
+	
+	return True
+#)
+
+
+def test_3():
+	""" ! """
+#(
+	data = [1,2,3]
+	
+	def fn_mult(t, DATA):
+	#(
+		return t * DATA["multiplier"]
+	#)
+	
+	fndata_10_mult = FuncData(fn_mult, {"multiplier": 10}) # arg given using Tuple
+	
+	res = call_fndata(data[0], fndata_10_mult)
+	assert(res == data[0] * 10)
+	# ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
+	
+	return True
 #)
 
 
@@ -77,8 +102,9 @@ def main(params):
 	""" ! """
 #(
 	tests = [ \
-		(test_get_size, "Test | local file size retrieve test") \
-		,(test_get_bytes, "Test | local file bytes retrieve test") \
+		(test_1, "Test | call_fndata, call_command ; None argument") \
+		,(test_2, "Test | with argument; sequence type argument") \
+		,(test_3, "Test | with argument; dictionary type argument") \
 			]
 	#
 	
@@ -91,6 +117,8 @@ def main(params):
 	#)
 	
 	print("<[ INFO ]> All tests PASSED.")
+	
+	return True
 #)
 
 

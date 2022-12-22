@@ -30,48 +30,61 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
+""" Original file name: compute_base.py """
 #(
 ## Standard imports:
-import os
+from dataclasses import dataclass
+	#, field, KW_ONLY
 #)
 
 #(
 ## Non-standard imports:
-import type_definitions_0x0 as TD
-import compute_base_0x1 as CB
+import F_0x0_ as TD
 #)
 
 
-def get_size_local_file(file_path: TD.Str, DATA: TD.Any) -> TD.Int:
-	""" Returns local file size (in bytes) as an int. At least 0.
-		* CAN RAISE EXCEPTION!
-		file_path can be any valid path string.
-		DATA can be any type of data. Currently not used. """
+@dataclass
+class FuncData:
+	""" ! """
 #(
-	return os.path.getsize(file_path)
+	func: TD.Callable
+	data: TD.Any = None
 #)
 
 
-def get_bytes_local_file(file_path: TD.Str, DATA: TD.Any) -> TD.Bytes:
-	""" Returns byte sequence from given local file path.
-		* CAN RAISE EXCEPTION!
-		Indices are both inclusive. """
+@dataclass
+class Command:
+	""" ! """
 #(
-	start_index = DATA["start_index"]
-	end_index = DATA["end_index"]
-	
-	with open(file_path, "rb") as in_fobj:
-		# (
-		if start_index == 0:
-			# (
-			return in_fobj.read(end_index - start_index + 1)
-		# )
-		else:
-			# (
-			in_fobj.seek(start_index)
-			return in_fobj.read(end_index - start_index + 1)
-		# )
-	# )
+	target: TD.Any
+	fn_val: FuncData
 #)
 
+
+def call_func(target: TD.T, func: TD.Callable):
+	""" CAN RAISE EXCEPTION! """
+#(
+	return func(target)
+#)
+
+
+def call_fndata(target: TD.T, fn_val: FuncData):
+	""" CAN RAISE EXCEPTION! """
+#(
+	return fn_val.func(target, fn_val.data)
+#)
+
+
+def call_command(cd: Command):
+	""" CAN RAISE EXCEPTION! """
+#(
+	return call_fndata(cd.target, cd.fn_val)
+#)
+
+
+if __name__ == "__main__":
+	""" ! """
+#(
+	raise Exception("Not Runnable Module.")
+#)
 

@@ -7,7 +7,7 @@ const_data.py
 *.json
 *.txt
 
-!*0x7.txt
+!*_0x7_*
 !LICENSE.txt
 
 *.bak
