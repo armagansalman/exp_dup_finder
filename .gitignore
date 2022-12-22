@@ -6,7 +6,10 @@ const_data.py
 *.csv
 *.json
 *.txt
+
+!*0x7.txt
 !LICENSE.txt
+
 *.bak
 *.7z
 *.out

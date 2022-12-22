@@ -31,53 +31,8 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
 #(
-## Standard imports:
-from dataclasses import dataclass
-	#, field, KW_ONLY
-#)
-
-#(
 ## Non-standard imports:
-import type_definitions as TD
-#)
-
-
-@dataclass
-class FuncData:
-	""" ! """
-#(
-	func: TD.Callable
-	data: TD.Any = None
-#)
-
-
-@dataclass
-class Command:
-	""" ! """
-#(
-	target: TD.Any
-	fn_val: FuncData
-#)
-
-
-def call_func(target: TD.T, func: TD.Callable):
-	""" ! """
-#(
-	return func(target)
-#)
-
-
-def call_fndata(target: TD.T, fn_val: FuncData):
-	""" ! """
-#(
-	return fn_val.func(target, fn_val.data)
-#)
-
-
-def call_command(cd: Command):
-	""" ! """
-#(
-	return call_fndata(cd.target, cd.fn_val)
+from compute_base_0x1 import *
 #)
 
 
@@ -162,6 +117,8 @@ def main(params):
 	#)
 	
 	print("<[ INFO ]> All tests PASSED.")
+	
+	return True
 #)
 
 
@@ -172,4 +129,3 @@ if __name__ == "__main__":
 	
 	main(args)
 #)
-

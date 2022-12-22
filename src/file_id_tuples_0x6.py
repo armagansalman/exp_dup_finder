@@ -30,25 +30,23 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-#(
-## Standard imports:
-import os
-#)
+NAMESPACE = "exp_dup_finder"
 
-#(
-## Non-standard imports:
-import type_definitions as TD
-import compute_base as CB
-#)
+id_filename_tuples = [ \
+	(0x0, "type_definitions_0x0.py") \
+	,(0x1, "compute_base_0x1.py") \
+	,(0x2, "procedures_abstract_0x2.py") \
+	,(0x3, "procedures_concrete_0x3.py") \
+	,(0x4, "main_0x4.py") \
+	,(0x5, "test_compute_base_0x5.py") \
+	,(0x6, "file_id_tuples_0x6.py") \
+	,(0x7, "example_file_0x7.txt") \
+	#,(0x, "") \
+	#,(0x, "") \
+	]
+#
+LAST_MODIFIED = "2022-12-22T20-02-17"
 
-
-def get_size_local_file(fpath: TD.Str) -> TD.Int:
-	""" Returns local file size (in bytes) as an int. At least 0.
-	CAN RAISE EXCEPTION!
-	fpath can be any valid path string. """
-#(
-	return os.path.getsize(fpath)
-#)
 
 
 

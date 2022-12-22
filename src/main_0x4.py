@@ -31,34 +31,73 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
 #(
+## Standard imports:
+# import os
+#)
+
+#(
 ## Non-standard imports:
-import type_definitions as TD
-import compute_base as CB
+import type_definitions_0x0 as TD
+import compute_base_0x1 as CB
+import procedures_abstract_0x2 as PrcAbs
+import procedures_concrete_0x3 as PrcCon
 #)
 
 
-def abf_get_size(target: TD.Any, get_size_fndata: CB.FuncData) \
-		-> TD.Int:
-	""" Returns size of given target as an int (at least 0).
-	CAN RAISE EXCEPTION!
-	
-	Target can be any type of data.
-	get_size_fndata has the capability to get given target's size. """
+def test_get_size():
+	""" a """
 #(
-	return CB.call_fndata(target, get_size_fndata)
-#)
-
-
-def abf_get_byte_seq(target: TD.Any, get_bytes_fndata: CB.FuncData) \
-		-> TD.Bytes:
-	""" Returns sequential bytes from given target.
-	CAN RAISE EXCEPTION!
+	fname = "./example_file_1.txt" # 10 byte file.
+	FSIZE = 10
 	
-	Target can be any type of data.
-	get_bytes_fndata has the capability to get given target's bytes. """
-#(
-	return CB.call_fndata(target, get_bytes_fndata)
+	fdat = CB.FuncData(PrcCon.get_size_local_file)
+	
+	fsz = PrcAbs.abf_get_size(fname, fdat)
+	
+	assert(fsz == FSIZE)
 #)
 
 
+def test_get_bytes():
+	""" a """
+#(
+	fname = "./example_file_1.txt" # 10 byte file.
+	byte_seq = bytes("123", encoding="utf-8")
+	
+	fdata = {"start_index":0, "end_index": 2} # First 3 bytes.
+	fdat = CB.FuncData(PrcCon.get_bytes_local_file, fdata)
+	
+	fbytes = PrcAbs.abf_get_byte_seq(fname, fdat)
+	
+	assert(fbytes == byte_seq)
+#)
 
+
+def main(params):
+	""" ! """
+#(
+	tests = [ \
+		(test_get_size, "Test | local file size retrieve test") \
+		,(test_get_bytes, "Test | local file bytes retrieve test") \
+			]
+	#
+	
+	for fn_test, summary in tests:
+	#(
+		print(f"<[ INFO ]> Running: {fn_test.__name__}")
+		print(f"Summary: {summary}")
+		
+		fn_test()
+	#)
+	
+	print("<[ INFO ]> All tests PASSED.")
+#)
+
+
+if __name__ == "__main__":
+	""" ! """
+#(
+	args = None
+	
+	main(args)
+#)

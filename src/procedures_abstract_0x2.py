@@ -31,41 +31,34 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
 #(
-## Standard imports:
-# import os
-#)
-
-#(
 ## Non-standard imports:
-import type_definitions as TD
-import compute_base as CB
-import procedures_abstract as PrcAbs
-import procedures_concrete as PrcCon
+import type_definitions_0x0 as TD
+import compute_base_0x1 as CB
 #)
 
 
-def main(params):
-	""" ! """
+def abf_get_size(target: TD.Any, get_size_fndata: CB.FuncData) \
+		-> TD.Int:
+	""" Returns size of given target as an int (at least 0).
+		* CAN RAISE EXCEPTION!
+		
+		Target can be any type of data.
+		get_size_fndata has the capability to get given target's size. """
 #(
-	fname = "C:/Users/Public/Documents/Game-related/tModLoader(2022-12-19T23-31).CT"
-	
-	def get_size(tgt, DATA):
-	#(
-		return PrcCon.get_size_local_file(tgt)
-	#)
-	
-	fdat = CB.FuncData(get_size)
-	
-	fsz = PrcAbs.abf_get_size(fname, fdat)
-	
-	print(f"File size: {fsz} bytes.")
+	return CB.call_fndata(target, get_size_fndata)
 #)
 
 
-if __name__ == "__main__":
-	""" ! """
+def abf_get_byte_seq(target: TD.Any, get_bytes_fndata: CB.FuncData) \
+		-> TD.Bytes:
+	""" Returns sequential bytes from given target.
+		* CAN RAISE EXCEPTION!
+		
+		Target can be any type of data.
+		get_bytes_fndata has the capability to get given target's bytes. """
 #(
-	args = None
-	
-	main(args)
+	return CB.call_fndata(target, get_bytes_fndata)
 #)
+
+
+
