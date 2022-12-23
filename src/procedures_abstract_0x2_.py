@@ -32,108 +32,39 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 #(
 ## Non-standard imports:
-from F_0x1_ import *
+import type_definitions_0x0_ as TD
+import compute_base_0x1_ as CB
 #)
 
 def GET_FILENAME():
 #(
-	FILENAME = "test_compute_base"
+	FILENAME = "procedures_abstract"
 	return FILENAME
 #)
 
 
-def test_1():
-	""" ! """
-#(
-	data = [1,2,3]
-	
-	func = lambda x, DATA: len(x)
-	
-	fnv = FuncData(func)
-	
-	res = call_fndata(data, fnv)
-	res2 = call_command(Command(data, fnv))
-	
-	assert(res == res2)
-	# ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-	return True
-#)
-
-
-def test_2():
-	""" ! """
-#(
-	data = [1,2,3]
-	
-	def fn_adder(t, DATA):
-	#(
-		return t + DATA[0]
-	#)
-	
-	fndata_10_adder = FuncData(fn_adder, (10,)) # arg given using Tuple
-	
-	res = call_fndata(data[0], fndata_10_adder)
-	assert(res == data[0] + 10)
-	# ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-	fndata_10_adder2 = FuncData(fn_adder, [10]) # arg given using List
-	
-	res2 = call_fndata(data[-1], fndata_10_adder)
-	assert(res2 == data[-1] + 10)
-	
-	return True
-#)
-
-
-def test_3():
-	""" ! """
-#(
-	data = [1,2,3]
-	
-	def fn_mult(t, DATA):
-	#(
-		return t * DATA["multiplier"]
-	#)
-	
-	fndata_10_mult = FuncData(fn_mult, {"multiplier": 10}) # arg given using Tuple
-	
-	res = call_fndata(data[0], fndata_10_mult)
-	assert(res == data[0] * 10)
-	# ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~ ~
-	
-	return True
-#)
-
-
-def main(params):
-	""" ! """
-#(
-	tests = [ \
-		(test_1, "Test | call_fndata, call_command ; None argument") \
-		,(test_2, "Test | with argument; sequence type argument") \
-		,(test_3, "Test | with argument; dictionary type argument") \
-			]
-	#
-	
-	print(f"<[ INFO ]> Running FILENAME: {GET_FILENAME()}")
-	
-	for fn_test, summary in tests:
-	#(
-		print(f"<[ INFO ]> Running: {fn_test.__name__}")
-		print(f"Summary: {summary}")
+def abf_get_size(target: TD.Any, get_size_fndata: CB.FuncData) \
+		-> TD.Int:
+	""" Returns size of given target as an int (at least 0).
+		* CAN RAISE EXCEPTION!
 		
-		fn_test()
-	#)
-	
-	print("<[ INFO ]> All tests PASSED.")
-	
-	return True
-#)
-
-
-if __name__ == "__main__":
-	""" ! """
+		Target can be any type of data.
+		get_size_fndata has the capability to get given target's size. """
 #(
-	args = None
-	
-	main(args)
+	return CB.call_fndata(target, get_size_fndata)
 #)
+
+
+def abf_get_byte_seq(target: TD.Any, get_bytes_fndata: CB.FuncData) \
+		-> TD.Bytes:
+	""" Returns sequential bytes from given target.
+		* CAN RAISE EXCEPTION!
+		
+		Target can be any type of data.
+		get_bytes_fndata has the capability to get given target's bytes. """
+#(
+	return CB.call_fndata(target, get_bytes_fndata)
+#)
+
+
+

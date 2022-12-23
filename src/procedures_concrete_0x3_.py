@@ -37,8 +37,8 @@ import os
 
 #(
 ## Non-standard imports:
-import F_0x0_ as TD
-import F_0x1_ as CB
+import type_definitions_0x0_ as TD
+import compute_base_0x1_ as CB
 #)
 
 def GET_FILENAME():

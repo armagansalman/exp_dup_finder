@@ -38,7 +38,7 @@ from dataclasses import dataclass
 
 #(
 ## Non-standard imports:
-import F_0x0_ as TD
+import type_definitions_0x0_ as TD
 #)
 
 def GET_FILENAME():

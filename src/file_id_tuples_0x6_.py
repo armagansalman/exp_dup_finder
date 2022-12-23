@@ -30,41 +30,27 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-#(
-## Non-standard imports:
-import F_0x0_ as TD
-import F_0x1_ as CB
-#)
+FILENAME = "file_id_tuples"
 
-def GET_FILENAME():
-#(
-	FILENAME = "procedures_abstract"
-	return FILENAME
-#)
+NAMESPACE = "exp_dup_finder:src"
 
-
-def abf_get_size(target: TD.Any, get_size_fndata: CB.FuncData) \
-		-> TD.Int:
-	""" Returns size of given target as an int (at least 0).
-		* CAN RAISE EXCEPTION!
-		
-		Target can be any type of data.
-		get_size_fndata has the capability to get given target's size. """
-#(
-	return CB.call_fndata(target, get_size_fndata)
-#)
+id_filename_tuples = [ \
+	(0x0, "type_definitions_0x0_.py") \
+	,(0x1, "compute_base_0x1_.py") \
+	,(0x2, "procedures_abstract_0x2_.py") \
+	,(0x3, "procedures_concrete_0x3_.py") \
+	,(0x4, "main_0x4_.py") \
+	,(0x5, "test_compute_base_0x5_.py") \
+	,(0x6, "file_id_tuples_0x6_.py") \
+	,(0x7, "example_file_0x7_.txt") \
+	#,(0x, "") \
+	#,(0x, "") \
+	]
+#
+LAST_MODIFIED = "2022-12-23T11-42-04"
 
 
-def abf_get_byte_seq(target: TD.Any, get_bytes_fndata: CB.FuncData) \
-		-> TD.Bytes:
-	""" Returns sequential bytes from given target.
-		* CAN RAISE EXCEPTION!
-		
-		Target can be any type of data.
-		get_bytes_fndata has the capability to get given target's bytes. """
-#(
-	return CB.call_fndata(target, get_bytes_fndata)
-#)
+
 
 
 

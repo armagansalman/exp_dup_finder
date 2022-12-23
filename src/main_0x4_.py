@@ -30,27 +30,82 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-FILENAME = "file_id_tuples"
+#(
+## Standard imports:
+# import os
+#)
 
-NAMESPACE = "exp_dup_finder"
+#(
+## Non-standard imports:
+import type_definitions_0x0_ as TD
+import compute_base_0x1_ as CB
+import procedures_abstract_0x2_ as PrcAbs
+import procedures_concrete_0x3_ as PrcCon
+#)
 
-id_filename_tuples = [ \
-	(0x0, "type_definitions_0x0.py") \
-	,(0x1, "compute_base_0x1.py") \
-	,(0x2, "procedures_abstract_0x2.py") \
-	,(0x3, "procedures_concrete_0x3.py") \
-	,(0x4, "main_0x4.py") \
-	,(0x5, "test_compute_base_0x5.py") \
-	,(0x6, "file_id_tuples_0x6.py") \
-	,(0x7, "example_file_0x7.txt") \
-	#,(0x, "") \
-	#,(0x, "") \
-	]
-#
-LAST_MODIFIED = "2022-12-22T20-30-08"
-
-
+def GET_FILENAME():
+#(
+	FILENAME = "main"
+	return FILENAME
+#)
 
 
+def test_get_size():
+	""" a """
+#(
+	fname = "./example_file_0x7_.txt" # 10 byte file.
+	FSIZE = 10
+	
+	fdat = CB.FuncData(PrcCon.get_size_local_file)
+	
+	fsz = PrcAbs.abf_get_size(fname, fdat)
+	
+	assert(fsz == FSIZE)
+#)
 
 
+def test_get_bytes():
+	""" a """
+#(
+	fname = "./example_file_0x7_.txt" # 10 byte file.
+	byte_seq = bytes("123", encoding="utf-8")
+	
+	fdata = {"start_index":0, "end_index": 2} # First 3 bytes.
+	fdat = CB.FuncData(PrcCon.get_bytes_local_file, fdata)
+	
+	fbytes = PrcAbs.abf_get_byte_seq(fname, fdat)
+	
+	assert(fbytes == byte_seq)
+#)
+
+
+def main(params):
+	""" ! """
+#(
+	tests = [ \
+		(test_get_size, "Test | local file size retrieve test") \
+		,(test_get_bytes, "Test | local file bytes retrieve test") \
+			]
+	#
+	
+	print(f"<[ INFO ]> Running FILENAME: {GET_FILENAME()}")
+	
+	for fn_test, summary in tests:
+	#(
+		print(f"<[ INFO ]> Running Function: {fn_test.__name__}")
+		print(f"Summary: {summary}")
+		
+		fn_test()
+	#)
+	
+	print("<[ INFO ]> All tests PASSED.")
+#)
+
+
+if __name__ == "__main__":
+	""" ! """
+#(
+	args = None
+	
+	main(args)
+#)
