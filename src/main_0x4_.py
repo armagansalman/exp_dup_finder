@@ -68,16 +68,29 @@ def test_get_bytes():
 	""" a """
 #(
 	fname = "./example_file_0x7_.txt" # 10 byte file.
-	byte_seq = bytes("123", encoding="utf-8")
+	byte_seq: bytes = bytes("123", encoding="utf-8")
 	
 	fdata = {"start_index":0, "end_index": 2} # First 3 bytes.
 	fdat = CB.FuncData(PrcCon.get_bytes_local_file, fdata)
 	
-	fbytes = PrcAbs.abf_get_byte_seq(fname, fdat)
+	fbytes: bytes = PrcAbs.abf_get_byte_seq(fname, fdat)
 	
 	assert(fbytes == byte_seq)
 #)
 
+
+def test_hash():
+	""" ! """
+#(
+	import hash_0x8_ as HASH
+	
+	S = bytes("abcdef", encoding="utf-8")
+	
+	dgst = HASH.sha512_bytes_digest(S)
+	
+	print(f"Bytes digest byte count: {len(dgst)}")
+	
+#)
 
 def main(params):
 	""" ! """
@@ -85,7 +98,8 @@ def main(params):
 	tests = [ \
 		(test_get_size, "Test | local file size retrieve test") \
 		,(test_get_bytes, "Test | local file bytes retrieve test") \
-			]
+		,(test_hash, "Test | hash functions") \
+		]
 	#
 	
 	print(f"<[ INFO ]> Running FILENAME: {GET_FILENAME()}")

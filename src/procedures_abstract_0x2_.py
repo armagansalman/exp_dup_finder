@@ -67,4 +67,7 @@ def abf_get_byte_seq(target: TD.Any, get_bytes_fndata: CB.FuncData) \
 #)
 
 
-
+def abf_group_by_key(target_iter: TD.Iter, get_key: CB.FuncData):
+	""" ! """
+#(
+#)

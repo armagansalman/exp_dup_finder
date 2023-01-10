@@ -58,7 +58,9 @@ Bytes = bytes
 IterHashable = Iter[Hashable]
 
 T = TypeVar('T')
+
 K = TypeVar('K')
+V = TypeVar('V')
 
 # Custom type definitions:
 NumNatural = Int  # Starts from 0.

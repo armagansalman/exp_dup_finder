@@ -30,49 +30,33 @@ OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE
 OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-FILENAME = "file_id_tuples"
+#(
+## Standard imports:
+import hashlib as HASH
+#)
 
-NAMESPACE = "exp_dup_finder:src"
+#(
+## Non-standard imports:
+import type_definitions_0x0_ as TD
+#)
 
-id_filename_tuples = [ \
-	(0x0, "type_definitions_0x0_.py") \
-	,(0x1, "compute_base_0x1_.py") \
-	,(0x2, "procedures_abstract_0x2_.py") \
-	,(0x3, "procedures_concrete_0x3_.py") \
-	,(0x4, "main_0x4_.py") \
-	,(0x5, "test_compute_base_0x5_.py") \
-	,(0x6, "file_id_tuples_0x6_.py") \
-	,(0x7, "example_file_0x7_.txt") \
-	,(0x8, "hash_0x8_.py") \
-	,(0x9, "") \
-	,(0xa, "") \
-	,(0xb, "") \
-	,(0xc, "") \
-	,(0xd, "") \
-	,(0xe, "") \
-	,(0xf, "") \
-	,(0x10, "") \
-	,(0x11, "") \
-	,(0x12, "") \
-	,(0x13, "") \
-	,(0x14, "") \
-	,(0x15, "") \
-	,(0x16, "") \
-	,(0x17, "") \
-	,(0x18, "") \
-	,(0x19, "") \
-	,(0x1a, "") \
-	,(0x1b, "") \
-	,(0x1c, "") \
-	,(0x1d, "") \
-	,(0x1e, "") \
-	,(0x1f, "") \
-	,(0x20, "") # 32 \
-	#,(0x, "") \
-	]
+
+def sha512_bytes_digest(data: TD.Bytes) -> TD.Bytes:
+	""" Returned object takes up half the size of hexdigest return. """
+	# (
+	sha512_obj = HASH.sha512()
+
+	sha512_obj.update(data)
+
+	return sha512_obj.digest()
+# )
+
+
+#def sha512_hexdigest(data: TD.Bytes) -> TD.Str:
+    ## (
+    #sha512_obj = HASH.sha512()
 #
-LAST_MODIFIED = "2022-12-23T12-13-55"
-
-
-
-
+    #sha512_obj.update(data)
+#
+    #return sha512_obj.hexdigest()
+## )
